@@ -1,0 +1,100 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 10, 2015, 5:13:30 PM
+    Author     : abdullah
+*/
+$color: white;
+body{
+    background:$color;
+}
+
+
+.grid_astar {
+    border: 1px solid black;
+    border-width: 2px;
+
+    width:300px;
+    margin: 0 auto;
+/*    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -ms-box-sizing: content-box;
+    -webkit-box-sizing: content-box ;*/
+box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box ;
+    background-image: url(icon2/grass_1.png)
+}
+
+//square of grid
+img.quad_g{
+
+    height:100%;  
+
+    display:inline-block;
+    border: 1px solid black;
+    border-width: 1px 1px 1px 1px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box ;
+    overflow:hidden;
+
+}
+
+
+.quad2{
+    width:60px;
+    height: 60px;
+    background:blue;
+}
+
+//grid's row
+.row_g{
+    display:block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box ;
+    
+
+}
+
+/*center div*/
+.c_div{
+    display:table;
+    margin:0 auto;
+}
+
+#content_container{
+    background:#F9F9F9;
+}
+
+#footer{
+    background:#303030;
+    bottom:0;
+    color:#fff;
+    height:300px;
+    position: absolute;
+    width:100%;
+    z-index:2;
+    margin:0;
+    padding:0;
+}
+
+*, html{
+    margin:0;
+    padding:0;
+}
+
+#header{
+    background-color:#ffffff;
+    height:100px;
+    position:relative;
+    width:100%;
+    z-index:2;
+}
