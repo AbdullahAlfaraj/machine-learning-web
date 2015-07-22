@@ -1,9 +1,7 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 abstract class QuadTypeEnum 
 { 
@@ -13,7 +11,9 @@ abstract class QuadTypeEnum
                 const GOAL= 'Goal';
             };
 
-
+/**
+ * 
+ */
 class Node {
 
     public $parent_node; //refrence to the parent node
@@ -29,7 +29,9 @@ class Node {
 
 }
 
-
+/**
+ * 
+ */
 class Grid {
 
     public $nodes; //2d array() of Nodes
@@ -48,7 +50,7 @@ class Grid {
 
     public function setGrid($array_1d, $num_row, $num_col) {
         foreach ($array_1d as $i => $node) {
-            $index = convert1DTo2DIndex($i, $num_row, $num_col);
+            $index = convert1DTo2DIndex($i, $num_col);
             $row = $index['row'];
             $col = $index['col'];
             $this->nodes[$row][$col] = new Node($node, $row, $col);
@@ -162,6 +164,7 @@ function runAstar($grid, $start_row, $start_col, $goal_row, $goal_col, $max_row,
 
 
 /**
+ * function isGoal
  * //check if the given node is the goal
  * @param Node $node
  * @param Node $goal
@@ -184,7 +187,18 @@ function isSameNode($node_1, $node_2) {
     return ($node_1->row == $node_2->row && $node_1->col == $node_2->col);
 }
 
-
+/**
+ * function findSuccessors
+ * find the neighboring nodes of the given location
+ * Note: here we only find the four closest neighbors( top, right,bottom,left)
+ * 
+ * @param array(Node)[][] $nodes    the grid, a 2d array of nodes
+ * @param int $row        the current node row's index
+ * @param int $col        the current node col's index
+ * @param int $max_row     the last row index in the gird
+ * @param int $max_col     the last col index in the grid
+ * @return array(Node)  $successors      the array of successors
+ */
 function &findSuccessors(&$nodes, $row, $col, $max_row, $max_col) {
     $successors = array();
     $next_row = $row;
@@ -229,6 +243,13 @@ function &findSuccessors(&$nodes, $row, $col, $max_row, $max_col) {
     return $successors;
 }
 
+/**
+ * function doesExist
+ * check if the node already exist in the list   
+ * @param Node $node    the node we want to check 
+ * @param array(Node) $list    an array of nodes we want to check against
+ * @return boolean      return true if the node exsit, false otherwise
+ */
 function doesExist($node, $list) {
     $result = false;
     foreach ($list as $element) {
@@ -241,7 +262,15 @@ function doesExist($node, $list) {
     return $result;
 }
 
-
+/**
+ * function findReversePath
+ * construct the a reversed path from the goal to the start node
+ * Note: we need to revese the path array if we want the path from the start to the goal 
+ * @param Node $start_node  the first node in the path
+ * @param Node $goal_node   the last node in the path
+ * @param Node $last_node   the last node been visited in the A* algorthim , we should remove this paramter cause it is not needed
+ * @return array(Node)      the shortest path from the goal to the start 
+ */
 function findReversePath($start_node, $goal_node, $last_node) {
     $path = array();
     $current_node = null;
@@ -264,7 +293,13 @@ function findReversePath($start_node, $goal_node, $last_node) {
     return $path;
 }
 
-
+/**
+ * function isObstacle
+ * check if the given node is an obstacle or not
+ * 
+ * @param Node $node    the node in question
+ * @return bool         true if the node is an obstacle, false otherwise
+ */
 function isObstacle($node) {
     $obstacle = QuadTypeEnum::ROCK;//'X';
 
@@ -301,13 +336,28 @@ function sortNodes(&$nodes, $order) {
 
 /*****************general helper function section*****************/
 
+/**
+ * function convert2DTo1DIndex
+ * take 2d index and converted to its equvelant 1d array's index 
+ * @param int $row      row's index
+ * @param int $col      col's index
+ * @param int $num_col  last col index + 1
+ * @return int          the 1d index
+ */
 function convert2DTo1DIndex($row, $col, $num_col) {
     $index_1d = $row * $num_col + $col;
 
     return $index_1d;
 }
 
-function convert1DTo2DIndex($index_1d, $num_row, $num_col) {
+/**
+ * function convert1DTo2DIndex
+ * take a 1d index and converted to 2d index 
+ * @param int $index_1d     the 1d index
+ * @param int $num_col      the last col index + 1
+ * @return 1D array(int)    hold the 2d index
+ */
+function convert1DTo2DIndex($index_1d, $num_col) {
     $index_2d = ['row' => 0, 'col' => 0];
 //index_2d[0] = //row
 //index_2d[1] = //col;
@@ -317,11 +367,12 @@ function convert1DTo2DIndex($index_1d, $num_row, $num_col) {
 }
 
 /**
+ * function pop
  * pop an element of the list
  * @param array     $list
  * @param (int or string)   $index
- * @param refrence      $dis the element will hold the result
- * @return any
+ * @param refrence      $dis the element that will hold the result
+ * @return return the refrence 
  */
 function pop(&$list, $index, &$dis) {
     $dis = $list[$index];

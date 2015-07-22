@@ -1,3 +1,4 @@
+current_goal_index = {row: 0, col: 0};
 
 //function convert2DTo1DIndex
 //usefull to convert 2D array index to 1D array index
@@ -124,6 +125,13 @@ function getQuadType(row,col)
 //new_col       : int       the bug new col
 function moveBug(position, new_row, new_col)
 {
+    //dont do anything if the new and the current locations are the same 
+    if(position.row == new_row &&
+            position.col == new_col)
+        return;
+    
+    var old_position = jQuery.extend({},position);//do shallow copy
+    
     //change current bug position to grass
     changeQuadType(position.row, position.col, QuadTypeEnum.GRASS);
     //set current bug position to new value
@@ -132,6 +140,15 @@ function moveBug(position, new_row, new_col)
     position.col = new_col;
     //change the quad in the grid to reflect the new position of the bug
     changeQuadType(position.row, position.col, QuadTypeEnum.BUG);
+    
+      //if the bug leave the goal location we should runder the goal again
+    if(old_position.row == current_goal_index.row &&
+            old_position.col == current_goal_index.col)
+    {
+        moveGoal(current_goal_index, current_goal_index.row, current_goal_index.col);
+        
+        
+    }
 
 }
 
@@ -329,14 +346,37 @@ function jsPostSetMove(user_input, handler_url, success_message)
 {
 
     $.post(handler_url, user_input, function (data, status) {
-        alert(success_message);
+       // alert(success_message);
         var obj = jQuery.parseJSON(data);
         //$('#read_comment_div').html(obj['comments']);
         //set_moves is the path from the starting location to the goal
         set_moves = obj['path'];
         console.log(obj['path']);
+        colorPath(set_moves);
         //updateCommentSectionEvent();
     });
 
     console.log(grid_1d);
+}
+
+
+//function colorPath
+//highlight the path from the start to the goal node
+//
+//path  : array of nodes{row,col}         the shortest path between the start and the goal nodes
+function colorPath(path)
+{
+
+   //remove highlight from all nodes in the grid
+    $('.grid_astar > .row_g .quad_g').css({"border-color":"black"});
+   
+    
+    //find the jq array of the path
+    $.each(path,function(index,value){
+   
+    $quad = findQuadJQ(value.row,value.col);
+    $quad.css({"border-color":"orange"});
+});
+    
+    
 }

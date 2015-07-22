@@ -123,7 +123,7 @@ if ($b_find_path)
                 $(".select_item").click(function () {
                     selected_type = $(this).data('type');
                     //alert("type is " + type);
-                    $('#selected_type').text(selected_type);
+                    //$('#selected_type').text(selected_type);
                     $("#current_item").attr('src',getImagePath(selected_type));
 
                 });
@@ -201,19 +201,18 @@ if ($b_find_path)
                     Column:<input type="text" name='col' value="" id="col_i" />
                     <input class='' type="button" id="create_grid" value ="Create Grid" />
                     <input class='' type="button" id="random_grid" value="Random Grid" />
-
                 </form>
 
             </div>
             <img src="icon2/bug.png" alt="Smiley face" height="42" width="42" id='current_item'/>
-            <button class='select_item' id='select_bug' data-type='1'>Bug</button>
-            <button class='select_item' id='select_grass' data-type='2'>Grass</button>
-            <button class='select_item' id='select_rock' data-type='3'>Rock</button>
-            <button class='select_item' id='select_goal' data-type='4'>Goal</button>
+            <button class='select_item' id='select_bug' data-type='1' title='Place the "Bug" in the starting location'>Bug</button>
+            <button class='select_item' id='select_grass' data-type='2' title='"Grass" is an empty field'>Grass</button>
+            <button class='select_item' id='select_rock' data-type='3' title='"Rock" is an obstacle that cann&apos;t be walked over '>Rock</button>
+            <button class='select_item' id='select_goal' data-type='4' title='an Apple that represents the final destination of the Bug'>Goal</button>
             <div class='c_div' style='margin-bottom:10px;'>
-                <button class='move btn btn-default' id='prev_move'>Prev</button>
-                <button class='move btn btn-default' id='next_move'>Next</button>  
-                <button class='move btn btn-default' id='run_astar'>Run</button>  
+                <button class='move' id='prev_move' title="move one step farther from the goal">Prev</button>
+                <button class='move' id='next_move' title="move one step closer to the goal">Next</button>  
+                <button class='move' id='run_astar' title="find the shortest path, if there is any!">Run</button>  
             </div>
 
             <div id='content_container'>
@@ -235,8 +234,8 @@ if ($b_find_path)
                      <div class="quad" style="background:yellow;"></div>
                      <br />-->
                 </div>
-                <div>Current Position:<span id='position'>none</span></div>
-                <div>Selecetd Type:<span id='selected_type'>none</span></div>
+<!--                <div>Current Position:<span id='position'>none</span></div>-->
+<!--                <div>Selecetd Type:<span id='selected_type'>none</span></div>-->
             </div>
 
         </div>
